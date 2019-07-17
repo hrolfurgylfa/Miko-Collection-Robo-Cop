@@ -7,7 +7,9 @@ def getSettingsFile():
     with open("settings.json", "r") as settings_file:
         data = json.load(settings_file)
     return data
-settings = getSettingsFile()
+
+try: settings = json.loads(os.environ["Settings"])
+except KeyError: settings = getSettingsFile()
 
 # Create the client
 client = discord.Client()
