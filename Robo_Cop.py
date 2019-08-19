@@ -1,13 +1,16 @@
 import discord
 from discord.ext import commands
 import json
+import os
 
 # Get the settings file
 def getSettingsFile():
     with open("settings.json", "r") as settings_file:
         data = json.load(settings_file)
     return data
-settings = getSettingsFile()
+
+try: settings = json.loads(os.environ["Settings"])
+except KeyError: settings = getSettingsFile()
 
 # Create the client
 client = discord.Client()
@@ -21,7 +24,7 @@ async def on_message(message):
             await message.delete()
 
     # This is a very specific filter I made for stopping a user from mentioning multiple words in the same message
-    if message.author.id == 378666988412731404:
+    if message.author.id == 357637054416289794:
         content = message.content.lower()
         if content.find("hroi") != -1 and (content.find("rickity") != -1 or content.find("rickety") != -1):
             await message.channel.send(message.author.mention+" Please don't mention that fanfic again, it has gone too far.")
